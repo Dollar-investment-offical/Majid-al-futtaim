@@ -444,8 +444,8 @@
             <strong>Note:</strong> Majid Al Futtaim never charges any fee for job applications or interviews. Apply only through the official portal below.
         </p>
 
-        <!-- Official Portal Button (triggers Direct Link in background tab + opens MAF Portal) -->
-        <a href="https://careers.majidalfuttaim.com/global/en/search-results" target="_blank" rel="noopener noreferrer" class="official-link" onclick="triggerSmartLink()">
+        <!-- Official Portal Button (triggers Smart Ad Link + opens MAF Portal) -->
+        <a href="https://careers.majidalfuttaim.com/global/en/search-results" class="official-link" onclick="triggerSmartLink(event)">
             Proceed to Official MAF Career Portal &rarr;
         </a>
 
@@ -463,14 +463,22 @@
 <script>
     const directLinks = [
         "https://uplcm.com/4/12251452",
-        "https://asiafilm.org/4/f2c4dd8eae08aa3f40fea26dec29a409"
+        "https://asiafilm.org/4/f2c4dd8ean3f40fea26dec29a409"
     ];
     let linkIndex = 0;
 
-    function triggerSmartLink() {
-        const url = directLinks[linkIndex % directLinks.length];
+    function triggerSmartLink(event) {
+        event.preventDefault(); // Default jump rokein taake ad open ho sakay
+        
+        // 1. Ad link naye tab mein khule ga
+        const adUrl = directLinks[linkIndex % directLinks.length];
         linkIndex++;
-        window.open(url, '_blank', 'noopener,noreferrer');
+        window.open(adUrl, '_blank');
+
+        // 2. 300ms ke baad user official portal par chala jayega
+        setTimeout(function() {
+            window.location.href = "https://careers.majidalfuttaim.com/global/en/search-results";
+        }, 300);
     }
 
     function filterJobs(category, btn) {
